@@ -12,6 +12,6 @@ export class ElectronicsProduct extends Product {
             this.getPriceWithDiscount(),
             this.getCategory()
         );
-        return Number ((this.getDiscountedPrice() + tax).toFixed(2));
+        return Number ((this.getPriceWithDiscount() + tax).toFixed(2));
     }
 }

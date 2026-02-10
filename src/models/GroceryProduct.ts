@@ -17,6 +17,6 @@ export class GroceryProduct extends Product {
             this.getCategory()
         );
     
-    return Number ((this.getPrice() + groceryTax).toFixed(2));
+    return Number ((this.getPriceWithDiscount() + groceryTax).toFixed(2));
     }
 }
