@@ -28,8 +28,23 @@ const DOM = {
   heading : document.getElementById("produits") as HTMLElement
 };
 
-//using immutable list 
 const lesProduits : (GroceryProduct | ElectronicsProduct)[] = [];
+
+document.addEventListener("click", (evnt) => {
+    const target = evnt.target as HTMLElement;
+    if (target.closest(".product-card") || 
+target === DOM.searchBtn ||
+target === DOM.input ||
+target === DOM.heading) {
+    return;
+}
+DOM.input.value ="";
+renderFn([...lesProduits]);
+
+});
+
+//using immutable list 
+
 
 function renderFn(products: (GroceryProduct | ElectronicsProduct)[]) {
   if (!DOM.grid) return;
