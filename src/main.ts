@@ -61,7 +61,7 @@ function renderFn(products: (GroceryProduct | ElectronicsProduct)[]) {
         <p>You save: $${(p.getPrice() - p.getPriceWithDiscount()).toFixed(2)} <p>
         <p>$${p.getPriceWithDiscount()} after discount<p>
         <p>$${(p.getPriceWithTax() - p.getPriceWithDiscount()).toFixed(2)} tax<p>
-        <p>$${p.getPriceWithTax()} Final price with tax<p>
+        <p>$${p.getPriceWithTax()} Final price with tax</p>
          `;
     DOM.grid.appendChild(c);
   });
