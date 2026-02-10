@@ -25,7 +25,11 @@ const DOM = {
   grid: document.getElementById("grid") as HTMLElement,
   searchBtn: document.getElementById("searchBtn") as HTMLBodyElement,
   input: document.getElementById("searchingProduct") as HTMLInputElement,
+  heading : document.getElementById("produits") as HTMLElement
 };
+
+//using immutable list 
+const lesProduits : (GroceryProduct | ElectronicsProduct)[] = [];
 
 function renderFn(products: (GroceryProduct | ElectronicsProduct)[]) {
   if (!DOM.grid) return;
@@ -46,19 +50,25 @@ function renderFn(products: (GroceryProduct | ElectronicsProduct)[]) {
          `;
     DOM.grid.appendChild(c);
   });
+}
 
-  //     console.log(`$${p.getPriceWithDiscount()} after discount`);
-  //     console.log(`$${(p.getPriceWithTax() - p.getPriceWithDiscount()).toFixed(2)} tax`)
-  //     console.log(`$${p.getPriceWithTax()} with tax`)
-  //     console.log("\n");
 
   DOM.searchBtn?.addEventListener("click", () => {
-    const val = (DOM.input as HTMLInputElement).value.toLowerCase();
+    const val = DOM.input.value.trim().toLowerCase();
 
-    const f = products.filter((p) => p.getTitle().toLowerCase().includes(val));
+    const f = 
+    val === "" ?
+    [...lesProduits] 
+    : lesProduits.filter((p) =>
+    p.getTitle().toLowerCase().includes(val));
     renderFn(f);
   });
-}
+
+
+DOM.heading?.addEventListener("click", () => {
+    DOM.input.value ="";
+    renderFn([...lesProduits]);
+});
 
 async function getDisplayProducts() {
   try {
@@ -67,8 +77,10 @@ async function getDisplayProducts() {
     // const products : (GroceryProduct | ElectronicsProduct) [] = product.map((prod: any) => {
     //     return ProductFactory.create(prod)
     //     });
-    const products = product.map((prod: any) => ProductFactory.create(prod));
-    renderFn(products);
+    lesProduits.push( ...product.map((prod: any) => ProductFactory.create(prod)));
+    renderFn([...lesProduits]); 
+
+
 
     // products.forEach((p) => {
     //     console.log(p.displayDetails());
